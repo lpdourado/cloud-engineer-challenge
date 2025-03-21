@@ -25,12 +25,12 @@ jobs:
 
             - name: Build and Push Main API
               run: |
-                docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/main-api:latest ./main-api
+                docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/main-api:latest -f k8s/main-api/Dockerfile k8s/main-api
                 docker push ${{ secrets.DOCKERHUB_USERNAME }}/main-api:latest
             
             - name: Build and Push Aux Service
               run: |
-                docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aux-servvice:latest ./aux-service
+                docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aux-servvice:latest -f  k8s/aux-service/Dockerfile k8s/aux-service
                 docker push ${{ secrets.DOCKERHUB_USERNAME }}/aux-service:latest
     deploy:
         name: Deploy to Kubernetes
