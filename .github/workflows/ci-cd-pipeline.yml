@@ -54,12 +54,6 @@ jobs:
                 kubectl apply -f k8s/main-api/
                 kubectl apply -f k8s/aux-service/
 
-            - name: Set up ArgoCD CLI
-              run: |
-                # Install ArgoCD CLI
-                curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.8.0/argocd-linux-amd64
-                chmod +x /usr/local/bin/argocd
-
             - name: Authenticate with ArgoCD
               run: |
                 argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
