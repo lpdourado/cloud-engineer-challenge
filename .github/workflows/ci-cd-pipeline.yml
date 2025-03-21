@@ -9,7 +9,7 @@ on:
 jobs:
     build-and-push:
         name: Build & Push Docker Images
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         steps:
             - name: Checkout Code
               uses: actions/checkout@v4
@@ -49,6 +49,12 @@ jobs:
               run: |
                 echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig.yaml
                 export KUBECONFIG=kubeconfig.yaml
+
+            - name: Set up Kubeconfig
+              run: |
+                echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+                kubectl config current-context
+                kubectl cluster-info
 
             - name: Apply Kubernetes Manifests
               run: |
