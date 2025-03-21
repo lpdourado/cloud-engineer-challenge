@@ -19,6 +19,7 @@ jobs:
 
             - name: Log in to Docker Uhb
               run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+              docker info  # Debug to check if login was successful
 
             - name: Build and Push Main API
               run: |
