@@ -46,7 +46,6 @@ jobs:
 
             - name: Set up Kubeconfig
               run: |
-                cat ~/.kube/config
                 kubectl config current-context
                 kubectl cluster-info
 
