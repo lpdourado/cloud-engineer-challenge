@@ -11,7 +11,7 @@ ssm_client = boto3.client("ssm", region_name=aws_region)
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello from Main API"}
+    return {"message": "Hello from Main API", "region": aws_region}
 
 @app.get("/s3-buckets")
 def list_s3_buckets():

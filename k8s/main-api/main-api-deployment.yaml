@@ -23,6 +23,16 @@ spec:
               value: "http://aux-service:8001"
             - name: AWS_REGION
               value: "eu-west-1"
+            - name: AWS_PROFILE
+              value: "default"
+          volumeMounts:
+            - name: aws-credentials
+              mountPath: /root/.aws
+      volumes:
+        - name: aws-credentials
+          hostPath:
+            path: /home/ubuntu/.aws
+            type: Directory
 ---
 apiVersion: v1
 kind: Service
