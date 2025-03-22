@@ -1,11 +1,8 @@
 import os
 import boto3
 from fastapi import FastAPI
-from prometheus_fastpi_instrumentator import Instrumentator
 
 app = FastAPI()
-
-Instrumentator().instrument(app).expose(app)
 
 aws_region = os.getenv("AWS_REGION", "eu-west-1")
 
