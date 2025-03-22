@@ -66,5 +66,5 @@ jobs:
 
             - name:
               run: |
-                argocd app sync main-api
-                argocd app sync aux-service
+                argocd app sync argocd/main-api-app
+                argocd app sync argocd/aux-service-app
