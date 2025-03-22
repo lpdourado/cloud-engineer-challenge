@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: main-api
+  namespace: cloud-engineer-challenge
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::890742573274:role/GitHubActionsOIDC
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,26 +21,12 @@ spec:
       labels:
         app: main-api
     spec:
+      serviceAccountName: main-api
       containers:
         - name: main-api
           image: lpdourado/main-api:latest
           ports:
             - containerPort: 8000
-          env:
-            - name: AUX_SERVICE_URL
-              value: "http://aux-service:8001"
-            - name: AWS_REGION
-              value: "eu-west-1"
-            - name: AWS_PROFILE
-              value: "default"
-          volumeMounts:
-            - name: aws-credentials
-              mountPath: /root/.aws
-      volumes:
-        - name: aws-credentials
-          hostPath:
-            path: /home/ubuntu/.aws
-            type: Directory
 ---
 apiVersion: v1
 kind: Service
