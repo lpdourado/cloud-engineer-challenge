@@ -4,9 +4,43 @@ on:
     push:
         branches:
             - master
+            
+    pull_request:
+        branches:
+            - master
 
 
 jobs:
+    terraform:
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.3.7
+      
+      - name: Set up AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::890742573274:role/GitHubActionsOIDC
+          aws-region: eu-west-1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+
+      - name: Terraform Outputs
+        run: terraform output -json
+
     build-and-push:
         name: Build & Push Docker Images
         runs-on: ubuntu-latest
