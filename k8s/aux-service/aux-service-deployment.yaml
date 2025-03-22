@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aux-service
-  namespace: aux-service
+  namespace: cloud-engineer-challenge
 spec:
   replicas: 2
   selector:
@@ -26,7 +26,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: aux-service
-  namespace: aux-service
+  namespace: cloud-engineer-challenge
 spec:
   selector:
     app: aux-service
