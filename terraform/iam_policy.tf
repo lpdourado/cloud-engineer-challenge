@@ -6,7 +6,7 @@ resource "aws_iam_policy" "github_oidc_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action   = ["s3:ListBucket", "s3:GetObject"]
+        Action   = ["s3:*"]
         Effect   = "Allow"
         Resource = [
           "${aws_s3_bucket.main.arn}",
@@ -16,7 +16,7 @@ resource "aws_iam_policy" "github_oidc_policy" {
         ]
       },
       {
-        Action   = ["ssm:GetParameter"]
+        Action   = ["ssm:*"]
         Effect   = "Allow"
         Resource = "${aws_ssm_parameter.app_version.arn}"
       }
