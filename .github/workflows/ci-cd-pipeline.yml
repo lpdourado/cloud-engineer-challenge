@@ -56,8 +56,8 @@ jobs:
 
             - name: Authenticate with ArgoCD
               run: |
-                argocd login ${{ secrets.ARGOCD_SERVER }} --auth-token ${{ secrets.ARGOCD_TOKEN }} --insecure
-
+                argocd login ${{ secrets.ARGOCD_SERVER }} --auth-token "${{ secrets.ARGOCD_TOKEN }}" --grpc-web --insecure
+                
             - name:
               run: |
                 argocd app sync main-api
