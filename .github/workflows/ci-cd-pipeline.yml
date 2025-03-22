@@ -53,11 +53,17 @@ jobs:
               run: |
                 kubectl apply -f k8s/main-api/
                 kubectl apply -f k8s/aux-service/
+            
+            - name: Debug GitHub Secrets
+              run: |
+                echo "ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}"
+                echo "ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}"
+              
 
             - name: Authenticate with ArgoCD
               run: |
                 argocd login ${{ secrets.ARGOCD_SERVER }} --auth-token "${{ secrets.ARGOCD_TOKEN }}" --grpc-web --insecure
-                
+
             - name:
               run: |
                 argocd app sync main-api
