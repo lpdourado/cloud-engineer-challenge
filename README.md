@@ -1,4 +1,4 @@
-### Overview
+# Overview
 
 This document provides a comprehensive overview of the Kubernetes deployment process for the aux-service application, covering all configurations, technologies, and stack components used.
 
@@ -117,7 +117,7 @@ jobs:
 
 ## Application Details
 
-# Main API (main-api)
+### Main API (main-api)
 
 This service includes integration with AWS S3 and AWS SSM to retrieve and manage cloud resources.
 
@@ -170,7 +170,7 @@ def get_ssm_parameter(name: str):
 ```
 
 
-# Auxiliary Service (aux-service)
+### Auxiliary Service (aux-service)
 
 This service includes integration with AWS S3 and AWS SSM to retrieve and manage cloud resources.
 
