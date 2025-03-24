@@ -19,7 +19,7 @@ The following technologies and services were utilized for this deployment:
 Terraform was used to provision AWS resources such as AWS IAM roles, policies, S3 buckets, SSM parameters, and store tfstate file into AWS.
 
 Terraform structure:
-'''
+
 terraform
   |
   |__backend.tf
@@ -29,14 +29,14 @@ terraform
   |__main.tf
   |__output.tf
   |__provider.tf
-  '''
+  
 
 
 ## CI/CD GitHub Actions
 
 GitHub Actions was used to automate the deployment process.
 
-'''
+
 name: CI/CD Pipeline
 
 on:
@@ -111,7 +111,7 @@ jobs:
               run: |
                 argocd app sync argocd/main-api-app
                 argocd app sync argocd/aux-service-app
-'''
+
 
 
 ## Application Details
@@ -121,7 +121,8 @@ jobs:
 This service includes integration with AWS S3 and AWS SSM to retrieve and manage cloud resources.
 
 Code Implementation:
-'''
+
+
 from fastapi import FastAPI
 import os
 import boto3
@@ -165,7 +166,7 @@ def get_ssm_parameter(name: str):
         return {"parameter": response["Parameter"]["Value"], "service_version": "1.0.0"}
     except Exception as e:
         return {"error": str(e), "service_version": "1.0.0"}
-'''
+
 
 
 #Auxiliary Service (aux-service)
@@ -174,7 +175,7 @@ This service includes integration with AWS S3 and AWS SSM to retrieve and manage
 
 Code Implementation:
 
-'''
+
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -183,19 +184,19 @@ app = FastAPI()
 def read_root():
     return {"message": "Hello from Auxiliary Service", "region": "eu-west-1"}
 
-'''
+
 
 ## Docker Implementation
 
 The application was containerized using Docker. The docker run command used for running the service locally was:
 
-'''
+
 docker run -p 8000:8000 \
   -e AWS_REGION=us-east-1 \
   -e AWS_PROFILE=default \
   -v ~/.aws:/root/.aws \
   main-api
-'''
+
 
 This command:
 - Maps port 8000 of the container to 8000 on the host.
@@ -206,7 +207,7 @@ This command:
 
 To deploy the application in Kubernetes, the following deployment.yaml manifest was created:
 
-'''
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -228,11 +229,11 @@ spec:
           image: lpdourado/main-api:latest
           ports:
             - containerPort: 8000
-'''
+
 
 Service Definition
 
-'''
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -247,11 +248,11 @@ spec:
       targetPort: 8000
   type: ClusterIP
 
-'''
+
 
 Service Account
 
-'''
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -259,28 +260,28 @@ metadata:
   namespace: cloud-engineer-challenge
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::890742573274:role/GitHubActionsOIDC
-'''
+
 
 ## Deployment Process
 
 To deploy the service in Kubernetes:
 
-'''
+
 kubectl apply -f main-api-deployment.yaml
-'''
+
 
 To check the running pods:
 
-'''
+
 kubectl get pods
 kubectl logs <pod-name>
-'''
+
 
 To test the service:
 
-'''
+
 kubectl port-forward service/main-api 8000:8000
-'''
+
 
 Access via http://localhost:8001.
 
