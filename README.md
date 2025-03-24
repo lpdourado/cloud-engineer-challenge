@@ -170,7 +170,7 @@ def get_ssm_parameter(name: str):
 ```
 
 
-#Auxiliary Service (aux-service)
+# Auxiliary Service (aux-service)
 
 This service includes integration with AWS S3 and AWS SSM to retrieve and manage cloud resources.
 
